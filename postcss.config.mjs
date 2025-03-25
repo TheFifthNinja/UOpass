@@ -1,7 +1,18 @@
 /** @type {import('postcss-load-config').Config} */
-const config = {
+export default {
   plugins: {
-    '@tailwindcss/postcss': {},
+    tailwindcss: {
+      theme: {
+        extend: {
+          colors: {
+            'deep-blue': '#000044',
+            'vibrant-orange': '#ee8a07',
+            'sunny-yellow': '#ffde46'
+          }
+        }
+      }
+    },
+    autoprefixer: {},
+    ...(process.env.NODE_ENV === 'production' ? { cssnano: {} } : {})
   },
-};
-export default config;
+}

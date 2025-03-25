@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import * as randomWordsModule from 'random-words';
+import { Copy, RefreshCcw, Lock } from 'lucide-react';
 
 export default function Home() {
   const [generatedText, setGeneratedText] = useState("");
@@ -66,7 +67,6 @@ export default function Home() {
     throw new Error("Could not find valid random-words function");
   };
   
- // if the random-words module is not available, use a failsafe
   const passwordFailsafe = () => {
     const part1 = Math.random().toString(36).substring(2, 8);
     const part2 = Math.random().toString(36).substring(2, 8);
@@ -80,42 +80,63 @@ export default function Home() {
   };
  
   return (
-    <div
-      className="hero min-h-screen"
+    <div className="min-h-screen flex items-center justify-center bg-cover bg-center relative"
       style={{
         backgroundImage: "url(https://www.otago.ac.nz/__data/assets/image/0035/568295/University-of-Otago-tohu-image-1880.jpg)",
       }}
     >
-      <div className="hero-overlay bg-opacity-60"></div>
-      <div className="hero-content text-neutral-content text-center">
-        <div className="max-w-md">
-          <h1 className="mb-5 text-5xl font-bold">UOpass</h1>
-          <div className="card bg-base-100 w-120 shadow-lg">
-            <figure>
-              <div className="w-full p-4 text-lg font-mono text-center bg-gray-100 text-gray-800 rounded-t-lg relative">
-                {generatedText}
-                {copied && (
-                  <span className="absolute top-1 right-2 text-green-600 text-sm font-semibold animate-fade-in-out">
-                    ✓ Copied!
-                  </span>
-                )}
-              </div>
-            </figure>
-            <div className="card-body">
-              <div className="card-actions flex justify-center">
-                <button className="btn btn-primary" onClick={handleCopy}>
-                  Copy to Clipboard
-                </button>
-                <button className="btn btn-accent" onClick={handleRegenerate}>
-                  Regenerate
-                </button>
-                <button className="btn btn-secondary">
-                  Encrypt
-                </button>
-              </div>
+      <div className="absolute inset-0 bg-black opacity-60"></div>
+      <div className="relative z-10 w-full max-w-md px-4">
+        <h1 className="text-5xl font-bold text-center mb-6" style={{color: '#ffde46'}}>UOpass</h1>
+        <div className="bg-white rounded-xl shadow-2xl overflow-hidden">
+          <div className="p-6 bg-gray-100 text-center relative">
+            <div className="text-2xl font-mono text-gray-800 break-words">
+              {generatedText}
+              {copied && (
+                <span className="absolute top-2 right-2 text-green-600 text-sm font-semibold animate-pulse">
+                  Copied!
+                </span>
+              )}
+            </div>
+          </div>
+          <div className="p-6 bg-white">
+            <div className="grid grid-cols-3 gap-4">
+              <button onClick={handleCopy} className="btn flex items-center justify-center gap-2"
+                style={{
+                  backgroundColor: '#000044', 
+                  color: 'white',
+                  borderColor: '#000044'
+                }}
+              >
+                <Copy className="w-5 h-5" />
+                Copy
+              </button>
+              <button onClick={handleRegenerate} className="btn flex items-center justify-center gap-2"
+                style={{
+                  backgroundColor: '#ee8a07', 
+                  color: 'white',
+                  borderColor: '#ee8a07'
+                }}
+              >
+                <RefreshCcw className="w-5 h-5" />
+                New
+              </button>
+              <button className="btn flex items-center justify-center gap-2"
+                style={{
+                  backgroundColor: '#ffde46', 
+                  color: '#000044',
+                  borderColor: '#ffde46'
+                }}
+              >
+                <Lock className="w-5 h-5" />
+                Encrypt
+              </button>
             </div>
           </div>
         </div>
+        <p className="text-white text-center mt-4 text-sm opacity-75" style={{color: '#ffde46'}}>
+          Generate secure passwords with ease
+        </p>
       </div>
     </div>
   );
